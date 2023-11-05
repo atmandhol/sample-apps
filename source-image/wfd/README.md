@@ -1,6 +1,7 @@
 ## Where for Dinner
 
-Source images for all where for dinner components are in the following publically accessible location:
+Source images for all where for dinner components are in the following publicly accessible locations:
+
 ```bash
 # where-for-dinner-availability
 gcr.io/adhol-playground/lsp:dev-where-for-dinner-availability@sha256:e0df791afe23906ed5b99243cc575e5aafff1bc575374c1cb4c2d6b6ca67ccdb
