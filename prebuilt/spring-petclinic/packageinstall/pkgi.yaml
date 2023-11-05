@@ -11,12 +11,12 @@ spec:
   serviceAccountName: server-workload-installer
   values:
   - secretRef:
-      name: where-for-dinner-availability-values
+      name: spring-petclinic-values
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: where-for-dinner-availability-values
+  name: spring-petclinic-values
 stringData:
     values.yml: |
-      workload_name: where-for-dinner-availability
+      workload_name: spring-petclinic

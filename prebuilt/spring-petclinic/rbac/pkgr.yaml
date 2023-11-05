@@ -1,0 +1,9 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  name: security.tanzu.vmware.com
+spec:
+  fetch:
+    imgpkgBundle:
+      image: us-east4-docker.pkg.dev/adhol-playground/ucp-with-syncer/package-repo-bundle@sha256:cf1407588d34c96791accc638266b3b7cdf7253628ea2491d484190eeac83721
