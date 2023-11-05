@@ -1,0 +1,51 @@
+---
+apiVersion: tanzu.vmware.com/v1
+kind: SpringCloudGatewayRouteConfig
+metadata:
+  name: wfd-route-config
+spec:
+  openapi:
+    generation:
+      enabled: false
+  routes:
+  - predicates:
+    - Path=/**
+    - Method=GET
+    order: 1000
+    filters:
+    - StripPrefix=0
+    tags:
+    - ui
+  - predicates:
+    - Path=/api/search/**
+    order: 1
+    filters:
+    - TokenRelay=
+    - StripPrefix=0
+    - RewritePath=/api/search(?<segment>/?.*), $\{segment}
+    - RemoveRequestHeader=Forwarded
+    tags:
+    - search-api
+    uri: http://where-for-dinner-search
+  - predicates:
+    - Path=/api/availability/**
+    order: 1
+    filters:
+    - StripPrefix=0
+    - RewritePath=/api/availability(?<segment>/?.*), $\{segment}
+    - RemoveRequestHeader=Forwarded
+    tags:
+    - search-api
+    uri: http://where-for-dinner-availability
+  service:
+    uri: http://where-for-dinner-ui
+---
+apiVersion: tanzu.vmware.com/v1
+kind: SpringCloudGatewayMapping
+metadata:
+  name: wfd-route-mapping
+spec:
+  gatewayRef:
+    name: spring-cloud-gateway
+  routeConfigRef:
+    name: wfd-route-config

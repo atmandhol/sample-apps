@@ -1,0 +1,22 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: where-for-dinner-crawler
+spec:
+  packageRef:
+    refName: where-for-dinner-crawler.dev.alm.dev
+    versionSelection:
+      constraints: ">=0.0.0"
+  serviceAccountName: server-workload-installer
+  values:
+  - secretRef:
+      name: where-for-dinner-crawler-values
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: where-for-dinner-crawler-values
+stringData:
+    values.yml: |
+      workload_name: where-for-dinner-crawler
