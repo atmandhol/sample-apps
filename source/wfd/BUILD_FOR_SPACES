@@ -1,0 +1,8 @@
+Pre-requisites:
+- TAP 1.7.0-rc.8 or above
+- Local source proxy configured
+
+Run the following command from all where for dinner app directories
+```bash
+tanzu apps workload apply -f config/workload.yaml --local-path . -y
+```

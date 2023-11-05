@@ -1,0 +1,85 @@
+apiVersion: tanzu.vmware.com/v1
+kind: SpringCloudGatewayRouteConfig
+metadata:
+  name: ui-route-config
+  namespace: server-workload
+spec:
+  routes:
+  - predicates:
+    - Path=/**
+    - Method=GET
+    order: 1000
+    filters:
+    - StripPrefix=0
+    tags:
+    - ui
+  service:
+    uri: http://where-for-dinner-ui.server-workload
+---
+apiVersion: tanzu.vmware.com/v1
+kind: SpringCloudGatewayMapping
+metadata:
+  name: ui-route-mapping
+  namespace: server-workload
+spec:
+  gatewayRef:
+    name: gateway-where-for-dinner
+  routeConfigRef:
+    name: ui-route-config
+---
+apiVersion: tanzu.vmware.com/v1
+kind: SpringCloudGatewayRouteConfig
+metadata:
+  name: search-route-config
+  namespace: server-workload
+spec:
+  routes:
+  - predicates:
+    - Path=/api/search/**
+    filters:
+    - TokenRelay=
+    - StripPrefix=0
+    - RewritePath=/api/search(?<segment>/?.*), $\{segment}
+    - RemoveRequestHeader=Forwarded
+    tags:
+    - search-api
+    uri: http://where-for-dinner-search.server-workload
+---
+apiVersion: tanzu.vmware.com/v1
+kind: SpringCloudGatewayMapping
+metadata:
+  name: search-route-mapping
+  namespace: server-workload
+spec:
+  gatewayRef:
+    name: gateway-where-for-dinner
+  routeConfigRef:
+    name: search-route-config
+---
+apiVersion: tanzu.vmware.com/v1
+kind: SpringCloudGatewayRouteConfig
+metadata:
+  name: availability-route-config
+  namespace: server-workload
+spec:
+  routes:
+  - predicates:
+    - Path=/api/availability/**
+    filters:
+    - StripPrefix=0
+    - RewritePath=/api/availability(?<segment>/?.*), $\{segment}
+    - RemoveRequestHeader=Forwarded
+    tags:
+    - search-api
+    uri: http://where-for-dinner-availability.server-workload
+---
+apiVersion: tanzu.vmware.com/v1
+kind: SpringCloudGatewayMapping
+metadata:
+  name: availability-route-mapping
+  namespace: server-workload
+spec:
+  gatewayRef:
+    name: gateway-where-for-dinner
+  routeConfigRef:
+    name: availability-route-config

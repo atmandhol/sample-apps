@@ -1,0 +1,55 @@
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: where-for-dinner-search
+  labels:
+    apps.tanzu.vmware.com/workload-type: server
+    app.kubernetes.io/part-of: where-for-dinner-search
+    networking.knative.dev/visibility: cluster-local
+    apps.tanzu.vmware.com/auto-configure-actuators: "true"
+    apps.tanzu.vmware.com/has-tests: "true"
+    apis.apps.tanzu.vmware.com/register-api: "true"
+    apps.tanzu.vmware.com/carvel-package-workflow: "true"
+spec:
+  env:
+  - name: spring_profiles_active
+    value: rabbitmq
+  build:
+    env:
+    - name: BP_JVM_VERSION
+      value: "17"
+    - name: BP_MAVEN_ACTIVE_PROFILES
+      value: streams
+  params:
+  - name: ports
+    value:
+    - port: 80
+      containerPort: 8080
+      name: http
+  - name: api_descriptor
+    value:
+      type: openapi
+      location:
+        path: /v3/api-docs
+      system: where-for-dinner
+      owner: where-for-dinner-team
+      description: Core Where for Dinner service for submitting searches and parameters
+  serviceClaims:
+  - name: rmq
+    ref:
+      apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+      kind: ClassClaim
+      name: msgbroker-where-for-dinner
+  resources:
+    requests:
+      memory: 500M
+      cpu: 100m
+    limits:
+      memory: 750M
+      cpu: 1500m
+  source:
+    git:
+      url: https://github.com/atmandhol/sample-apps.git
+      ref:
+        branch: main
+    subPath: source/wfd/where-for-dinner-search

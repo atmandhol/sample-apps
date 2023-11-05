@@ -1,0 +1,39 @@
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: where-for-dinner-ui
+  labels:
+    apps.tanzu.vmware.com/workload-type: server
+    app.kubernetes.io/part-of: where-for-dinner-ui
+    networking.knative.dev/visibility: cluster-local
+    apps.tanzu.vmware.com/has-tests: "true"
+    apps.tanzu.vmware.com/carvel-package-workflow: "true"
+spec:
+  build:
+    env:
+    - name: BP_NODE_RUN_SCRIPTS
+      value: build
+    - name: BP_WEB_SERVER_ROOT
+      value: dist
+  env:
+  - name: REACT_APP_PROFILE
+    value: nonsecure
+  params:
+  - name: ports
+    value:
+    - port: 80
+      containerPort: 8080
+      name: http
+  resources:
+    requests:
+      memory: 500M
+      cpu: 100m
+    limits:
+      memory: 750M
+      cpu: 1500m
+  source:
+    git:
+      url: https://github.com/atmandhol/sample-apps.git
+      ref:
+        branch: main
+    subPath: source/wfd/where-for-dinner-ui

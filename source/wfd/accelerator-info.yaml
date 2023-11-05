@@ -1,0 +1,33 @@
+id: 071bf558-abe2-4c1f-88a9-c4bc2cf942d1
+timestamp: 2023-10-18T17:40:30.340Z
+source: TAP-GUI
+username: guest
+accelerator:
+  name: where2
+  git:
+    url: https://github.com/vmware-tanzu/application-accelerator-samples
+    subPath: where-for-dinner
+    ref: main
+    commit: 741dca2bb987efe890e849a3a781ee8964201bb2
+fragments:
+  - name: build-wrapper-maven
+  - name: tap-workload
+options:
+  projectName: where2
+  workloadNamespace: server-workload
+  serviceNamespace: server-workload
+  workloadType: server
+  gatewayType: tapscg
+  msgBrokerType: rabbitmq
+  dynamicMsgBroker: true
+  msgbrokerName: msgbroker-where-for-dinner
+  dbType: h2
+  cacheType: inmemCache
+  enableSecurity: false
+  appWorkloadURL: http://where-for-dinner.spaces.devframework.land
+  ployglotWorkloads: false
+  nativeBuild: false
+  includeBuildToolWrapper: true
+  gatewayName: gateway-where-for-dinner
+  dynamicMsgBrokerClass: msgbroker-crossplane-where-for-dinner
+  numRabbitMQClusterNodes: 1
