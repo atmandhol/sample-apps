@@ -2,10 +2,10 @@
 apiVersion: packaging.carvel.dev/v1alpha1
 kind: PackageInstall
 metadata:
-  name: where-for-dinner-availability
+  name: spring-petclinic
 spec:
   packageRef:
-    refName: where-for-dinner-availability.dev.alm.dev
+    refName: spring-petclinic.dev.alm.dev
     versionSelection:
       constraints: ">=0.0.0"
   serviceAccountName: server-workload-installer
