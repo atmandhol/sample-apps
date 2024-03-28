@@ -1,0 +1,13 @@
+---
+kind: ContainerAppBuild
+apiVersion: apps.tanzu.vmware.com/v1alpha1
+metadata:
+  name: spring-petclinic
+spec:
+  build:
+    registry: us-east4-docker.pkg.dev/adhol-playground/supplychain/tap
+    env:
+      - name: BP_JVM_VERSION
+        value: "17"
+    buildpacks:
+      builder: "paketobuildpacks/builder-jammy-base"
