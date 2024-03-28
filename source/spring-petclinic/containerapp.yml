@@ -1,0 +1,8 @@
+---
+apiVersion: apps.tanzu.vmware.com/v1
+kind: ContainerApp
+metadata:
+  name: spring-petclinic
+spec:
+  build:
+    path: "."

@@ -1,0 +1,12 @@
+---
+apiVersion: build.tanzu.vmware.com/v1
+kind: ContainerAppBuildConfig
+metadata:
+  name: platform-config
+spec:
+  registry: "us-east4-docker.pkg.dev/adhol-playground/supplychain/tap"
+  nonSecretEnv:
+  - name: BP_JVM_VERSION
+    value: "17"
+  buildpacks:
+    builder: "paketobuildpacks/builder-jammy-base"
