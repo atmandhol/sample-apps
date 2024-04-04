@@ -27,7 +27,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class PetClinicApplication {
-	fdsjflksdjflkdsj
 	public static void main(String[] args) {
 		SpringApplication.run(PetClinicApplication.class, args);
 	}
